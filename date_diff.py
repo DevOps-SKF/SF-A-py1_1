@@ -3,9 +3,6 @@ import datetime as dt
 
 days_in_year = 365.2425 # To take into account leap years
 
-def sort_key(e):
-    return f"{e[1]}{e[2]}{e[3]}"
-
 def import_data():
     data = []
     with open("datafile.py", "r") as f:
@@ -16,8 +13,9 @@ def import_data():
             birthdate = birthdate.split('"')[1]
             (byear, bmonth, bday) = map(int, birthdate.split("-"))
             age = int((dt.date.today() - dt.date(byear, bmonth, bday)).days / days_in_year)
-            data = data + [(name, byear, bmonth, bday, age)]
-    data.sort(key=sort_key)
+#            data = data + [(name, byear, bmonth, bday, age)]
+            data.append((name, byear, bmonth, bday, age))
+    data.sort(key=lambda e: f"{e[1]}{e[2]}{e[3]}")
     return data
 
 def prepare_json(data):
